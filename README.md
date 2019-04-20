@@ -14,9 +14,10 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Nick_Offerman_at_UMBC_%28cropped%29.jpg/440px-Nick_Offerman_at_UMBC_%28cropped%29.jpg" height="200" align="right">
 <img src="https://image.shutterstock.com/z/stock-vector-lj-letters-four-colors-in-abstract-background-logo-design-identity-in-circle-alphabet-letter-418687846.jpg" height="200" align="right">
 
-We train the model on two different speech datasets.
+We train the model on three different speech datasets.
   1. [LJ Speech Dataset](https://keithito.com/LJ-Speech-Dataset/)
   2. [Nick Offerman's Audiobooks](https://www.audible.com.au/search?searchNarrator=Nick+Offerman)
+  3. [TTS-Portuguese Corpus](https://github.com/Edresson/TTS-Portuguese-Corpus)
  
 LJ Speech Dataset is recently widely used as a benchmark dataset in the TTS task because it is publicly available. It has 24 hours of reasonable quality samples.
 Nick's audiobooks are additionally used to see if the model can learn even with less data, variable speech samples. They are 18 hours long.

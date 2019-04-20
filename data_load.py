@@ -22,8 +22,13 @@ def load_vocab():
     return char2idx, idx2char
 
 def text_normalize(text):
-    text = ''.join(char for char in unicodedata.normalize('NFD', text)
-                           if unicodedata.category(char) != 'Mn') # Strip accents
+    if hp.language == 'pt':
+        accents = ('COMBINING ACUTE ACCENT', 'COMBINING GRAVE ACCENT') #portuguese
+        chars = [c for c in unicodedata.normalize('NFD', text) if c not in accents]
+        text = unicodedata.normalize('NFC', ''.join(chars))# Strip accent
+    else:
+        text = ''.join(char for char in unicodedata.normalize('NFD', text)
+                            if unicodedata.category(char) != 'Mn') # Strip accents
 
     text = text.lower()
     text = re.sub("[^{}]".format(hp.vocab), " ", text)
@@ -35,9 +40,15 @@ def load_data(mode="train"):
     char2idx, idx2char = load_vocab()
 
     if mode in ("train", "eval"):
+        if hp.language == 'pt':
+            transcript_file= 'texts.csv'
+            transcript_separator= '=='
+        else:
+            transcript_file='transcript.csv'
+            transcript_separator= '|'
         # Parse
         fpaths, text_lengths, texts = [], [], []
-        transcript = os.path.join(hp.data, 'transcript.csv')
+        transcript = os.path.join(hp.data, transcript_file)
         lines = codecs.open(transcript, 'r', 'utf-8').readlines()
         total_hours = 0
         if mode=="train":
@@ -46,11 +57,18 @@ def load_data(mode="train"):
             lines = lines[:1]
 
         for line in lines:
-            fname, _, text = line.strip().split("|")
+            if hp.language == 'pt':
+                fname,text = line.strip().split(transcript_separator)
+                file_name = os.path.basename(fname)
+                fpath = os.path.join(hp.data, "wavs",file_name)
+                #ignore test files
+                if int(file_name.split('-')[1].replace('.wav','')) >= 5655 and int(file_name.split('-')[1].replace('.wav',''))<=5674:
+                        continue
+            else:
+                fname, _, text = line.strip().split(transcript_separator)
+                fpath = os.path.join(hp.data, "wavs", fname + ".wav")
 
-            fpath = os.path.join(hp.data, "wavs", fname + ".wav")
             fpaths.append(fpath)
-
             text = text_normalize(text) + "E"  # E: EOS
             text = [char2idx[char] for char in text]
             text_lengths.append(len(text))
