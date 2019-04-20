@@ -6,13 +6,14 @@ https://www.github.com/kyubyong/tacotron
 '''
 class Hyperparams:
     '''Hyper parameters'''
-    vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
-    #vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" # Portuguese vocab
+    #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence  this is English vocab
+    vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" #  P: Padding E: End of Sentence  this is Portuguese 
     # data
-    data = "/data/private/voice/LJSpeech-1.0"
-    language = "en" # if use Portuguese change for 'pt'
+    #data = "/data/private/voice/LJSpeech-1.0"
+    data = "../TTS-Portuguese-Corpus/"
+    language = "pt" # if use Portuguese change for 'pt'
     # data = "/data/private/voice/nick"
-    test_data = 'harvard_sentences.txt'# if use Portuguese change for phonetically-balanced-sentences.txt
+    test_data = 'phonetically-balanced-sentences.txt'# if use English change for "harvard_setences.txt"
 
     # signal processing
     sr = 22050 # Sample rate.
