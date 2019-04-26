@@ -35,7 +35,7 @@ class Hyperparams:
     decoder_num_banks = 8
     num_highwaynet_blocks = 4
     r = 5 # Reduction factor. Paper => 2, 3, 5
-    dropout_rate = .5
+    dropout_rate = 0.1
 
     # training scheme
     lr = 0.001 # Initial learning rate.
