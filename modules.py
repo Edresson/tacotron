@@ -218,11 +218,14 @@ def gru(inputs, num_units=None, bidirection=False, scope="gru", reuse=None):
         if bidirection: 
             cell_bw = tf.contrib.rnn.GRUCell(num_units)
             outputs, _ = tf.nn.bidirectional_dynamic_rnn(cell, cell_bw, inputs, dtype=tf.float32)
-            return tf.concat(outputs, 2)  
+            outputs = tf.concat(outputs, 2)
+            outputs = layer_normalize(outputs)
+            outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
+            return outputs  
         else:
             outputs, _ = tf.nn.dynamic_rnn(cell, inputs, dtype=tf.float32)
-        outputs = layer_normalize(outputs)
-        outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
+            outputs = layer_normalize(outputs)
+            outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
             return outputs
 
 def attention_decoder(inputs, memory, num_units=None, scope="attention_decoder", reuse=None):
