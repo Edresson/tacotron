@@ -79,6 +79,7 @@ def load_data(mode="train"):
         # Parse
         lines = codecs.open(hp.test_data, 'r', 'utf-8').readlines()[1:]
         sents = [text_normalize(line.split(" ", 1)[-1]).strip() + "E" for line in lines] # text normalization, E: EOS
+        print("sentenças para sintese:",sents)
         lengths = [len(sent) for sent in sents]
         maxlen = sorted(lengths, reverse=True)[0]
         texts = np.zeros((len(sents), maxlen), np.int32)
