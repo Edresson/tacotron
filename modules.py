@@ -105,6 +105,29 @@ def bn(inputs,
 
     return outputs
 
+def layer_normalize(inputs,
+              scope="normalize",
+              reuse=None):
+    '''Applies layer normalization that normalizes along the last axis.
+
+    Args:
+      inputs: A tensor with 2 or more dimensions, where the first dimension has
+        `batch_size`. The normalization is over the last dimension.
+      scope: Optional scope for `variable_scope`.
+      reuse: Boolean, whether to reuse the weights of a previous layer
+        by the same name.
+
+    Returns:
+      A tensor with the same shape and data dtype as `inputs`.
+    '''
+    outputs = tf.contrib.layers.layer_norm(inputs,
+                                           begin_norm_axis=-1,
+                                           scope=scope,
+                                           reuse=reuse)
+    return outputs
+
+
+
 def conv1d(inputs, 
            filters=None, 
            size=1, 
@@ -141,6 +164,8 @@ def conv1d(inputs,
                 "use_bias":use_bias, "reuse":reuse}
         
         outputs = tf.layers.conv1d(**params)
+        outputs = layer_normalize(outputs)
+        outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
     return outputs
 
 def conv1d_banks(inputs, K=16, is_training=True, scope="conv1d_banks", reuse=None):
@@ -165,6 +190,8 @@ def conv1d_banks(inputs, K=16, is_training=True, scope="conv1d_banks", reuse=Non
                 output = conv1d(inputs, hp.embed_size // 2, k)
                 outputs = tf.concat((outputs, output), -1)
         outputs = bn(outputs, is_training=is_training, activation_fn=tf.nn.relu)
+        outputs = layer_normalize(outputs)
+        outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
     return outputs # (N, T, Hp.embed_size//2*K)
 
 def gru(inputs, num_units=None, bidirection=False, scope="gru", reuse=None):
@@ -194,6 +221,8 @@ def gru(inputs, num_units=None, bidirection=False, scope="gru", reuse=None):
             return tf.concat(outputs, 2)  
         else:
             outputs, _ = tf.nn.dynamic_rnn(cell, inputs, dtype=tf.float32)
+        outputs = layer_normalize(outputs)
+        outputs = tf.layers.dropout(outputs, rate=hp.dropout_rate)
             return outputs
 
 def attention_decoder(inputs, memory, num_units=None, scope="attention_decoder", reuse=None):
