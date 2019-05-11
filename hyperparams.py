@@ -7,7 +7,7 @@ https://www.github.com/kyubyong/tacotron
 class Hyperparams:
     '''Hyper parameters'''
     #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence  this is English vocab
-    vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" #  P: Padding E: End of Sentence  this is Portuguese 
+    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" #  P: Padding E: End of Sentence  this is Portuguese #"PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"
     # data
     #data = "/data/private/voice/LJSpeech-1.0"
     data = "../TTS-Portuguese-Corpus/"
