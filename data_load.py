@@ -34,11 +34,11 @@ def text_normalize(text):
                             if unicodedata.category(char) != 'Mn') # Strip accents
 
     
-    print('1:',text)
+    #print('1:',text)
     text = re.sub("[^{}]".format(hp.vocab), " ", text)
-    print('2:',text)
+    #print('2:',text)
     text = re.sub("[ ]+", " ", text)
-    print('3:',text)
+    #print('3:',text)
     return text
 
 def load_data(mode="train"):
