@@ -94,9 +94,20 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    
-    # with g.graph.as_default():
-    sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
+    #if use Trasnfer Learning ignore embedding layers weights during train
+    if(hp.TL):
+        # with g.graph.as_default():
+        sess.run(tf.global_variables_initializer())
+
+        # Restore parameters
+        var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
+        saver1 = tf.train.Saver(var_list=var_list)
+        saver= saver1
+        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir)
+        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver1)
+    else:
+        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
+                       
     with sv.managed_session() as sess:
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):

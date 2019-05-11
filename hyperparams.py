@@ -43,6 +43,8 @@ class Hyperparams:
     sampledir = 'samples'
     batch_size = 3
 
+    TL=True # Transfer Learning, if true ignore load weights for embedding layer
+    
 
 
 
