@@ -24,6 +24,7 @@ def load_vocab():
 def text_normalize(text):
     text = text.lower()
     if hp.language == 'pt':
+        text=text.replace("'",'')..replace('.','').replace('?','')
         text=text.replace('ç',"'").replace('ã','.').replace('é','?')
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents
