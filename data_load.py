@@ -22,17 +22,22 @@ def load_vocab():
     return char2idx, idx2char
 
 def text_normalize(text):
+    text = text.lower()
     if hp.language == 'pt':
-        accents = ('COMBINING ACUTE ACCENT', 'COMBINING GRAVE ACCENT') #portuguese
-        chars = [c for c in unicodedata.normalize('NFD', text) if c not in accents]
-        text = unicodedata.normalize('NFC', ''.join(chars))# Strip accent
+        text=text.replace('ç',"'").replace('ã','.').replace('é','?')
+        text = ''.join(char for char in unicodedata.normalize('NFD', text)
+                            if unicodedata.category(char) != 'Mn') # Strip accents
+        text=text.replace("'",'ç').replace('.','ã').replace('?','é')
     else:
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents
 
-    text = text.lower()
+    
+    print('1:',text)
     text = re.sub("[^{}]".format(hp.vocab), " ", text)
+    print('2:',text)
     text = re.sub("[ ]+", " ", text)
+    print('3:',text)
     return text
 
 def load_data(mode="train"):
