@@ -28,7 +28,7 @@ def plot_alignment(alignment, gs):
     gs : (int) global step
     """
     fig, ax = plt.subplots()
-    im = ax.imshow(alignment.T)
+    im = ax.imshow(alignment)
 
     # cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
     fig.colorbar(im)
@@ -74,16 +74,13 @@ def synthesize():
         fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
         fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
         plot_alignment(al[0], 123454566)
+        np.save(al[0],os.path.join(hp.sampledir,'align_save.npy'))
         print('figura salva')
         mags = sess.run(g.z_hat, {g.y_hat: y_hat})
         for i, mag in enumerate(mags):
             print("File {}.wav is being generated ...".format(i+1))
             audio = spectrogram2wav(mag)
             write(os.path.join(hp.sampledir, '{}.wav'.format(i+1)), hp.sr, audio)
-
-        al = sess.run(g.alignments)
-        fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
-        fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
         
 if __name__ == '__main__':
     synthesize()
