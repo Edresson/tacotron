@@ -74,7 +74,7 @@ def synthesize():
         fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
         fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
         plot_alignment(al[0], 123454566)
-        np.save(al[0],os.path.join(hp.sampledir,'align_save.npy'))
+        np.save(os.path.join(hp.sampledir,'align_save.npy'),al[0])
         print('figura salva')
         mags = sess.run(g.z_hat, {g.y_hat: y_hat})
         for i, mag in enumerate(mags):
