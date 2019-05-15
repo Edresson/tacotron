@@ -32,7 +32,7 @@ def plot_alignment_with_text(alignment,text, info=None):
         xlabel += '\n\n' + info
     plt.xlabel(xlabel,fontsize = 'x-large')
     plt.ylabel('Encoder timestep',fontsize = 'x-large')
-    plt.yticks(range(len(text)), list(text),fontsize ='xx-large' )
+    plt.yticks(range(len(text)), list(text.upper()),fontsize ='xx-large' )
     plt.tight_layout()
     return fig
 
