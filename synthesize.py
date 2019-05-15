@@ -60,7 +60,7 @@ def synthesize():
 
         #plot aligments
         for i,al in enumerate(aligs):
-            fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
+            fig = plot_alignment_with_text(al,'A inauguração da vila é quarta ou quinta-feira')
             fig.savefig(os.path.join(hp.sampledir,'align_'+str(i)+'_val.png'))
         ## mag
         mags = sess.run(g.z_hat, {g.y_hat: y_hat})
