@@ -17,7 +17,21 @@ from scipy.io.wavfile import write
 import os
 import numpy as np
 
-
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="-1"  #force use CPU
+def plot_alignment_with_text(alignment,text, info=None):
+    fig, ax = plt.subplots(figsize=(16, 10))
+    im = ax.imshow(
+        alignment.T, aspect='auto', origin='lower', interpolation=None)
+    fig.colorbar(im, ax=ax)
+    xlabel = 'Decoder timestep'
+    if info is not None:
+        xlabel += '\n\n' + info
+    plt.xlabel(xlabel)
+    plt.ylabel('Encoder timestep')
+    plt.yticks(range(len(text)), list(text))
+    plt.tight_layout()
+    return fig
 def synthesize():
     if not os.path.exists(hp.sampledir): os.mkdir(hp.sampledir)
 
@@ -44,6 +58,10 @@ def synthesize():
             audio = spectrogram2wav(mag)
             write(os.path.join(hp.sampledir, '{}.wav'.format(i+1)), hp.sr, audio)
 
+        al = sess.run(g.alignments)
+        fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
+        fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
+        
 if __name__ == '__main__':
     synthesize()
     print("Done")
