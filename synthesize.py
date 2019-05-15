@@ -19,6 +19,9 @@ import numpy as np
 
 from matplotlib import pylab as plt
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"]="-1"  #force use CPU
+
 def plot_alignment_with_text(alignment,text, info=None):
     fig, ax = plt.subplots(figsize=(16, 10))
     im = ax.imshow(
