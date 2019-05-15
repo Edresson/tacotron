@@ -54,13 +54,16 @@ def synthesize():
         # Feed Forward
         ## mel
         y_hat = np.zeros((texts.shape[0], 200, hp.n_mels*hp.r), np.float32)  # hp.n_mels*hp.r
+        
         for j in tqdm.tqdm(range(200)):
-            _y_hat = sess.run(g.y_hat, {g.x: texts, g.y: y_hat})
+            _y_hat,al = sess.run([g.y_hat,g.alignments], {g.x: texts, g.y: y_hat})
             y_hat[:, j, :] = _y_hat[:, j, :]
-        ## mag
-        mags,al = sess.run([g.z_hat,g.alignments], {g.y_hat: y_hat})
         fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
         fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
+        print('figura salva')
+        ## mag
+        mags = sess.run(g.z_hat, {g.y_hat: y_hat})
+        
         
         for i, mag in enumerate(mags):
             print("File {}.wav is being generated ...".format(i+1))
