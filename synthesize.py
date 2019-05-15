@@ -40,11 +40,7 @@ frases=["A inauguração da vila é quarta ou quinta-feira",
         " A cantora terá quatro meses para ensaiar seu canto",
         "Esse tema foi falado no congresso."]
 
-
-import os
 from matplotlib import pylab as plt
-
-os.environ["CUDA_VISIBLE_DEVICES"]="-1"  #force use CPU
 
 def plot_alignment_with_text(alignment,text, info=None):
     fig, ax = plt.subplots(figsize=(16, 10))
