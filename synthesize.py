@@ -58,14 +58,15 @@ def synthesize():
             _y_hat = sess.run(g.y_hat, {g.x: texts, g.y: y_hat})
             y_hat[:, j, :] = _y_hat[:, j, :]
         ## mag
-        mags = sess.run(g.z_hat, {g.y_hat: y_hat})
+        mags,al = sess.run([g.z_hat,g.alignments], {g.y_hat: y_hat})
+        fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
+        fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
+        
         for i, mag in enumerate(mags):
             print("File {}.wav is being generated ...".format(i+1))
             audio = spectrogram2wav(mag)
             write(os.path.join(hp.sampledir, '{}.wav'.format(i+1)), hp.sr, audio)
-        al = sess.run(g.alignments)
-        fig = plot_alignment_with_text(al[0],'A inauguração da vila é quarta ou quinta-feira')
-        fig.savefig(os.path.join(hp.sampledir,'align_1_val.png'))
+        
         
 if __name__ == '__main__':
     synthesize()
