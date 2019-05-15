@@ -28,7 +28,7 @@ def plot_alignment(alignment, gs):
     gs : (int) global step
     """
     fig, ax = plt.subplots()
-    im = ax.imshow(alignment)
+    im = ax.imshow(alignment.T)
 
     # cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
     fig.colorbar(im)
