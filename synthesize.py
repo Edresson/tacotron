@@ -19,6 +19,28 @@ import numpy as np
 
 
 
+frases=["A inauguração da vila é quarta ou quinta-feira",
+        "Vote se você tiver o título de eleitor",
+        "Hoje é fundamental encontrar a razão da existência humana",
+        "A temperatura é mais amena à noite",
+        "Em muitas cidades a população está diminuindo.",
+        "Nunca se deve ficar em cima do morro",
+        "Para as pessoas estranhas o panorama é desolador",
+        "É bom te ver colhendo flores menino",
+        "Eu finjo me banhar num lago ao amanhecer",
+        "Sua sensibilidade mostrará o caminho",
+        "A Amazônia é a reserva ecológica do globo",
+        "O ministério mudou demais com a eleição",
+        "Novas metas surgem na informática",
+        "O capital de uma empresa depende de sua produção",
+        "Se não fosse ela tudo teria sido melhor",
+        "A principal personagem no filme é uma gueixa",
+        "Espere seu amigo em casa",
+        "A juventude tinha que revolucionar a escola",
+        " A cantora terá quatro meses para ensaiar seu canto",
+        "Esse tema foi falado no congresso."]
+
+
 import os
 from matplotlib import pylab as plt
 
@@ -63,8 +85,8 @@ def synthesize():
 
         #plot aligments
         for i,al in enumerate(aligs):
-            fig = plot_alignment_with_text(al,'A inauguração da vila é quarta ou quinta-feira')
-            fig.savefig(os.path.join(hp.sampledir,'align_'+str(i)+'_val.png'))
+            fig = plot_alignment_with_text(al,frases[i])
+            fig.savefig(os.path.join(hp.sampledir,'align_'+str(i+1)+'_val.png'))
         ## mag
         mags = sess.run(g.z_hat, {g.y_hat: y_hat})
         for i, mag in enumerate(mags):
