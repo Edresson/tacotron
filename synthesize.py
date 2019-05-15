@@ -21,6 +21,7 @@ import numpy as np
 
 import os
 from matplotlib import pylab as plt
+
 os.environ["CUDA_VISIBLE_DEVICES"]="-1"  #force use CPU
 def plot_alignment_with_text(alignment,text, info=None):
     fig, ax = plt.subplots(figsize=(16, 10))
@@ -29,9 +30,9 @@ def plot_alignment_with_text(alignment,text, info=None):
     xlabel = 'Decoder timestep'
     if info is not None:
         xlabel += '\n\n' + info
-    plt.xlabel(xlabel)
-    plt.ylabel('Encoder timestep')
-    plt.yticks(range(len(text)), list(text))
+    plt.xlabel(xlabel,fontsize = 'x-large')
+    plt.ylabel('Encoder timestep',fontsize = 'x-large')
+    plt.yticks(range(len(text)), list(text),fontsize ='xx-large' )
     plt.tight_layout()
     return fig
 
