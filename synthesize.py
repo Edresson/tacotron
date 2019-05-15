@@ -17,7 +17,10 @@ from scipy.io.wavfile import write
 import os
 import numpy as np
 
+
+
 import os
+from matplotlib import pylab as plt
 os.environ["CUDA_VISIBLE_DEVICES"]="-1"  #force use CPU
 def plot_alignment(alignment, gs):
     """Plots the alignment
