@@ -16,6 +16,16 @@ from modules import *
 from networks import encoder, decoder1, decoder2
 from utils import *
 
+def get_variables_to_restore(variables, var_keep_dic):
+    variables_to_restore = []
+    for v in variables:
+        # one can do include or exclude operations here.
+        if v.name.split(':')[0] in var_keep_dic:
+            print("Variables restored: %s" % v.name)
+            variables_to_restore.append(v)
+
+    return variables_to_restore
+
 class Graph:
     def __init__(self, mode="train"):
         # Load vocabulary
@@ -96,6 +106,19 @@ if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
     #if use Trasnfer Learning ignore embedding layers weights during train
     if(hp.TL):
+        
+
+        ckpt = tf.train.get_checkpoint_state(tf.train.latest_checkpoint(hp.logdir))
+        pretrained_model = ckpt.model_checkpoint_path
+        variables = tf.global_variables()
+        sess.run(tf.variables_initializer(variables, name='init'))
+        # Get the trained variables
+        var_keep_dic = self.get_variable_in_checkpoint_file(pretrained_model)
+        variable_to_restore = get_variables_to_restore(variabless, var_keep_dic)
+        saver = tf.train.Saver(variables_to_restore)
+        saver.restore(sess, pretrained_model)
+        
+        '''
         # with g.graph.as_default():
         sess.run(tf.global_variables_initializer())
 
@@ -103,8 +126,8 @@ if __name__ == '__main__':
         var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
         saver1 = tf.train.Saver(var_list=var_list)
         saver= saver1
-        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir))
-        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver1)
+        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir))'''
+        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver)
     else:
         sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
                        
