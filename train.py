@@ -106,7 +106,9 @@ class Graph:
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
     variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
-    print("variaveis:", variables)
+    variables_to_restore = tf.contrib.framework.get_variables_to_restore(
+    exclude=['XXX']) 
+    print("variaveis:",variables_to_restore)
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
                        
     with sv.managed_session() as sess:
