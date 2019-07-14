@@ -19,9 +19,9 @@ from utils import *
 def get_variables_to_restore(variables, var_keep_dic):
     variables_to_restore = []
     for v in variables:
-        print("Variables restored: %s" % v.name)
+        #print("Variables restored: %s" % v.name)
         # one can do include or exclude operations here.
-        if v.name.split(':')[0] in var_keep_dic:
+        if not v.name.split(':')[0]  in var_keep_dic:
             print("1 Variables restored: %s" % v.name)
             variables_to_restore.append(v)
 
@@ -114,7 +114,7 @@ if __name__ == '__main__':
         # Get the trained variables
         variable_to_restore = get_variables_to_restore(variables, var_keep_dic)
         print("____________Variaveis________:",variable_to_restore)
-        saver = tf.train.Saver(variables_to_restore)
+        saver = tf.train.Saver(variable_to_restore)
         saver.restore(sess, pretrained_model)
         
         '''

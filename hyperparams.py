@@ -8,7 +8,7 @@ class Hyperparams:
     '''Hyper parameters'''
     #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
     #vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" # Portuguese vocab
-    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
+    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãéúê" # Portuguese vocab
     # data
     data = "../TTS-Portuguese-Corpus/"
     language = "pt" # if use English change for 'en'
