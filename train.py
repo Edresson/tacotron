@@ -112,9 +112,9 @@ if __name__ == '__main__':
 
     with tf.Session() as sess:
     #with sv.managed_session() as sess:
-        sess.run(tf.variables_initializer(variables, name='init'))
+        sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
         print(" novo saver")
-        saver = tf.train.Saver(var_list=tf.contrib.framework.get_variables_to_restore())
+        saver = tf.train.Saver(var_list=variables_to_restore)
         
         saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         
