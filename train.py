@@ -108,7 +108,7 @@ if __name__ == '__main__':
     variables_to_restore = tf.contrib.framework.get_variables_to_restore(
     exclude=['embedding/lookup_table:0']) 
     print("variaveis:",variables_to_restore)
-    sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
+    sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
                        
     with sv.managed_session() as sess:
         print(" novo saver")
