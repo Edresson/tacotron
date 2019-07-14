@@ -106,7 +106,7 @@ class Graph:
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
     variables_to_restore = tf.contrib.framework.get_variables_to_restore(
-    exclude=['embedding/lookup_table:0','embedding/lookup_table/Adam:0','embedding/lookup_table/Adam_1:0']#'net/encoder/prenet/dense1/kernel:0','net/encoder/prenet/dense1/bias:0']) 
+    exclude=['embedding/lookup_table:0','embedding/lookup_table/Adam:0','embedding/lookup_table/Adam_1:0'])#'net/encoder/prenet/dense1/kernel:0','net/encoder/prenet/dense1/bias:0']) 
     print("variaveis:",variables_to_restore)
     #sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
 
