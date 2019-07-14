@@ -118,7 +118,7 @@ if __name__ == '__main__':
         
         #sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
         
-        #saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
+        saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
