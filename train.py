@@ -109,12 +109,11 @@ if __name__ == '__main__':
         variables_to_restore = tf.contrib.framework.get_variables_to_restore(exclude=['embedding/lookup_table:0','embedding/lookup_table/Adam:0','embedding/lookup_table/Adam_1:0'])
     else:
         variables_to_restore = tf.contrib.framework.get_variables_to_restore()
-    sv = tf.train.Supervisor(logdir=None, save_summaries_secs=60, save_model_secs=0,saver=None)
+    sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
 
     #with tf.Session() as sess:
     with sv.managed_session() as sess:
         sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
-        sv.logdir = hp.logdir
         sv.saver = tf.train.Saver(var_list=variables_to_restore)
         sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         
