@@ -105,13 +105,14 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     variables_to_restore = tf.contrib.framework.get_variables_to_restore(
     exclude=['embedding/lookup_table:0']) 
     print("variaveis:",variables_to_restore)
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
                        
     with sv.managed_session() as sess:
+        sv.saver = tf.train.Saver(var_list=variables_to_restore)
+        sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                 _, gs = sess.run([g.train_op, g.global_step])
