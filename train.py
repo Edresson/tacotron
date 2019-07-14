@@ -108,19 +108,23 @@ if __name__ == '__main__':
     variables_to_restore = tf.contrib.framework.get_variables_to_restore(
     exclude=['embedding/lookup_table:0']) 
     print("variaveis:",variables_to_restore)
-    sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
-                       
-    with sv.managed_session() as sess:
+    #sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
+
+    with tf.Session() as sess:
+    #with sv.managed_session() as sess:
         print(" novo saver")
-        sv.saver = tf.train.Saver(var_list=variables_to_restore)
-        sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
+        saver = tf.train.Saver(var_list=variables_to_restore)
+        try:
+            saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
+        except:
+            print("erro restore")
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                 _, gs = sess.run([g.train_op, g.global_step])
 
                 # Write checkpoint files
                 if gs % 1000 == 0:
-                    sv.saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
+                    saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
 
                     # plot the first alignment for logging
                     al = sess.run(g.alignments)
