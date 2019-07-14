@@ -105,43 +105,43 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    #if use Trasnfer Learning ignore embedding layers weights during train
-    if(hp.TL):
-        
-
-        variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
-        sess.run(tf.global_variables_initializer())
-        var_keep_dic = ['']
-        # Get the trained variables
-        variable_to_restore = get_variables_to_restore(variables, var_keep_dic)
-        print("____________Variaveis________:",variable_to_restore)
-        saver = tf.train.Saver(variables_to_restore)
-        saver.restore(sess, pretrained_model)
-        
-        '''
-        # with g.graph.as_default():
-        sess.run(tf.global_variables_initializer())
-
-        # Restore parameters
-        var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
-        saver1 = tf.train.Saver(var_list=var_list)
-        saver= saver1
-        saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir))'''
-        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver)
-    else:
-        sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
-                       
     with sv.managed_session() as sess:
+        #if use Trasnfer Learning ignore embedding layers weights during train
+        if(hp.TL):
+            
+
+            variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
+            sess.run(tf.global_variables_initializer())
+            var_keep_dic = ['']
+            # Get the trained variables
+            variable_to_restore = get_variables_to_restore(variables, var_keep_dic)
+            print("____________Variaveis________:",variable_to_restore)
+            saver = tf.train.Saver(variables_to_restore)
+            saver.restore(sess, pretrained_model)
+            
+            '''
+            # with g.graph.as_default():
+            sess.run(tf.global_variables_initializer())
+
+            # Restore parameters
+            var_list = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
+            saver1 = tf.train.Saver(var_list=var_list)
+            saver= saver1
+            saver1.restore(sess, tf.train.latest_checkpoint(hp.logdir))'''
+            sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver)
+        else:
+            sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
+                           
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
-                _, gs = sess.run([g.train_op, g.global_step])
+                    _, gs = sess.run([g.train_op, g.global_step])
 
-                # Write checkpoint files
-                if gs % 1000 == 0:
-                    sv.saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
+                    # Write checkpoint files
+                    if gs % 1000 == 0:
+                        sv.saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
 
-                    # plot the first alignment for logging
-                    al = sess.run(g.alignments)
-                    plot_alignment(al[0], gs)
+                        # plot the first alignment for logging
+                        al = sess.run(g.alignments)
+                        plot_alignment(al[0], gs)
 
     print("Done")
