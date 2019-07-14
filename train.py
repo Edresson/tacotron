@@ -110,11 +110,11 @@ if __name__ == '__main__':
     else:
         variables_to_restore = tf.contrib.framework.get_variables_to_restore()
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
-
+    sv.saver = tf.train.Saver(var_list=variables_to_restore)
     #with tf.Session() as sess:
     with sv.managed_session() as sess:
-        #sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
-        sv.saver = tf.train.Saver(var_list=variables_to_restore)
+        sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
+        
         sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         
         while 1:
