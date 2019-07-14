@@ -111,6 +111,7 @@ if __name__ == '__main__':
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
                        
     with sv.managed_session() as sess:
+        print(" novo saver")
         sv.saver = tf.train.Saver(var_list=variables_to_restore)
         sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
         while 1:
