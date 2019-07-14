@@ -114,8 +114,7 @@ if __name__ == '__main__':
     #sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=None)
     print("antes do sess")
     with tf.train.MonitoredTrainingSession(
-        checkpoint_dir=hp.logdir,
-        save_summaries_secs) as sess:
+        checkpoint_dir=hp.logdir) as sess:
         print("no sess")
         
         sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
