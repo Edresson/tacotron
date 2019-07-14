@@ -105,18 +105,17 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    with tf.Session() as sess:
-        sess.run(tf.global_variables_initializer())
-    if( hp.TL):
+    if(hp.TL):
         variables_to_restore = tf.contrib.framework.get_variables_to_restore(exclude=['embedding/lookup_table:0','embedding/lookup_table/Adam:0','embedding/lookup_table/Adam_1:0'])
     else:
         variables_to_restore = tf.contrib.framework.get_variables_to_restore()
     
     saver = tf.train.Saver(var_list=variables_to_restore)
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0,saver=saver)
-
-    #with tf.Session() as sess:
+    print("antes do sess")
     with sv.managed_session() as sess:
+        print("no sess")
+        
         sess.run(tf.variables_initializer(tf.contrib.framework.get_variables_to_restore(), name='init'))
         
         sv.saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
