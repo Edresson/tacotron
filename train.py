@@ -114,10 +114,9 @@ if __name__ == '__main__':
     #with sv.managed_session() as sess:
         print(" novo saver")
         saver = tf.train.Saver(var_list=variables_to_restore)
-        try:
-            saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
-        except:
-            print("erro restore")
+        
+        saver.restore(sess, tf.train.latest_checkpoint(hp.logdir))
+        
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
                 _, gs = sess.run([g.train_op, g.global_step])
