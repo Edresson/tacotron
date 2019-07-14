@@ -41,5 +41,5 @@ class Hyperparams:
     logdir = "logdir/01"
     sampledir = 'samples'
     batch_size = 3
-
+    TL = True # Transfer Learning
 
