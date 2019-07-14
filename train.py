@@ -19,9 +19,10 @@ from utils import *
 def get_variables_to_restore(variables, var_keep_dic):
     variables_to_restore = []
     for v in variables:
+        print("Variables restored: %s" % v.name)
         # one can do include or exclude operations here.
         if v.name.split(':')[0] in var_keep_dic:
-            print("Variables restored: %s" % v.name)
+            print("1 Variables restored: %s" % v.name)
             variables_to_restore.append(v)
 
     return variables_to_restore
@@ -108,13 +109,11 @@ if __name__ == '__main__':
     if(hp.TL):
         
 
-        ckpt = tf.train.get_checkpoint_state(tf.train.latest_checkpoint(hp.logdir))
-        pretrained_model = ckpt.model_checkpoint_path
-        variables = tf.global_variables()
-        sess.run(tf.variables_initializer(variables, name='init'))
+        variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
+        sess.run(tf.global_variables_initializer())
+        var_keep_dic = ['']
         # Get the trained variables
-        var_keep_dic = self.get_variable_in_checkpoint_file(pretrained_model)
-        variable_to_restore = get_variables_to_restore(variabless, var_keep_dic)
+        variable_to_restore = get_variables_to_restore(variables, var_keep_dic)
         print("____________Variaveis________:",variable_to_restore)
         saver = tf.train.Saver(variables_to_restore)
         saver.restore(sess, pretrained_model)
