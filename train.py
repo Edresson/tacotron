@@ -115,8 +115,7 @@ if __name__ == '__main__':
         # Get the trained variables
         var_keep_dic = self.get_variable_in_checkpoint_file(pretrained_model)
         variable_to_restore = get_variables_to_restore(variabless, var_keep_dic)
-        print(variable_to_restore)
-        sys.exit()
+        print("____________Variaveis________:",variable_to_restore)
         saver = tf.train.Saver(variables_to_restore)
         saver.restore(sess, pretrained_model)
         
