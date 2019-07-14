@@ -105,7 +105,7 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'net')
+    variables = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES)
     print("variaveis:", variables)
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
                        
