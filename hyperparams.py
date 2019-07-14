@@ -7,12 +7,11 @@ https://www.github.com/kyubyong/tacotron
 class Hyperparams:
     '''Hyper parameters'''
     #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
-    #vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" # Portuguese vocab
-    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
+    #vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
+    vocab =   'PE ABCDEFGHIJKLMNOPQRSTUVWXYZÇÃÀÁÂÊÉÍÓÔÕÚÛabcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû!(),-.:;?' #Portuguese complete vocab
     # data
     data = "../TTS-Portuguese-Corpus/"
     language = "pt" # if use English change for 'en'
-    # data = "/data/private/voice/nick"
     test_data = 'phonetically-balanced-sentences.txt'# if use English change for'harvard_sentences.txt'
 
     # signal processing
@@ -42,9 +41,5 @@ class Hyperparams:
     logdir = "logdir/01"
     sampledir = 'samples'
     batch_size = 3
-
-    TL=False # Transfer Learning, if true ignore load weights for embedding layer
-    
-
 
 
