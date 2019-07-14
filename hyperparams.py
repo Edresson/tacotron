@@ -8,7 +8,7 @@ class Hyperparams:
     '''Hyper parameters'''
     #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
     #vocab = "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû" # Portuguese vocab
-    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãéúê" # Portuguese vocab
+    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
     # data
     data = "../TTS-Portuguese-Corpus/"
     language = "pt" # if use English change for 'en'
@@ -43,7 +43,7 @@ class Hyperparams:
     sampledir = 'samples'
     batch_size = 3
 
-    TL=True # Transfer Learning, if true ignore load weights for embedding layer
+    TL=False # Transfer Learning, if true ignore load weights for embedding layer
     
 
 
