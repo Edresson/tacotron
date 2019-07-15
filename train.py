@@ -105,18 +105,16 @@ class Graph:
          
 if __name__ == '__main__':
     g = Graph(); print("Training Graph loaded")
-    if(hp.TL):
+    if(hp.TL):#transfer learning ignore embedding layer in load weights
         variables_to_restore = tf.contrib.framework.get_variables_to_restore(exclude=['embedding/lookup_table:0','embedding/lookup_table/Adam:0','embedding/lookup_table/Adam_1:0'])
     else:
         variables_to_restore = tf.contrib.framework.get_variables_to_restore()
     
     saver = tf.train.Saver(var_list=variables_to_restore)
     sv = tf.train.Supervisor(logdir=hp.logdir, save_summaries_secs=60, save_model_secs=0)
-    print("antes do sess")
     with sv.managed_session() as sess:
-        print("no sess")
         if(hp.TL):
-            saver.restore(sess, tf.train.latest_checkpoint(hp.logdir+"-EN"))
+            saver.restore(sess, tf.train.latest_checkpoint(hp.logdir+"-EN")) # restore english weights
         
         while 1:
             for _ in tqdm(range(g.num_batch), total=g.num_batch, ncols=70, leave=False, unit='b'):
