@@ -122,7 +122,7 @@ if __name__ == '__main__':
 
                 # Write checkpoint files
                 if gs % 1000 == 0:
-                    saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
+                    sv.saver.save(sess, hp.logdir + '/model_gs_{}k'.format(gs//1000))
 
                     # plot the first alignment for logging
                     al = sess.run(g.alignments)
