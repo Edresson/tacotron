@@ -24,11 +24,14 @@ def load_vocab():
 def text_normalize(text):
     text = text.lower()
     if hp.language == 'pt':
-        text=text.replace("'",'').replace('.','').replace('?','')
+        accents = ('COMBINING ACUTE ACCENT', 'COMBINING GRAVE ACCENT') #portuguese
+        chars = [c for c in unicodedata.normalize('NFD', text) if c not in accents]
+        text = unicodedata.normalize('NFC', ''.join(chars))# Strip accent
+        '''text=text.replace("'",'').replace('.','').replace('?','')
         text=text.replace('ç',"'").replace('ã','.').replace('é','?')
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents
-        text=text.replace("'",'ç').replace('.','ã').replace('?','é')
+        text=text.replace("'",'ç').replace('.','ã').replace('?','é')'''
     else:
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents
