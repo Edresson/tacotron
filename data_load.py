@@ -23,12 +23,13 @@ def load_vocab():
 
 def text_normalize(text):
     text = text.lower()
+    
+    
     if hp.language == 'pt':
-        text=text.replace("'",'').replace('.','').replace('?','')
-        text=text.replace('ç',"'").replace('ã','.').replace('é','?')
+        #map 
+        text=text.replace("'",'').replace('ç',"'c").replace('ç',"'c").replace('ã' , "'a").replace('ã', "'a").replace('á',"'b").replace('â', "'c").replace('ê',"'e").replace('é' ,"'d").replace('í', "'i").replace('ó',"'o").replace('ô', "'f").replace('õ',"'g").replace('ú',"'u").replace('û',"'h")
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents
-        text=text.replace("'",'ç').replace('.','ã').replace('?','é')
     else:
         text = ''.join(char for char in unicodedata.normalize('NFD', text)
                             if unicodedata.category(char) != 'Mn') # Strip accents

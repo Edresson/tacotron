@@ -6,9 +6,23 @@ https://www.github.com/kyubyong/tacotron
 '''
 class Hyperparams:
     '''Hyper parameters'''
-    #vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
+    vocab = "PE abcdefghijklmnopqrstuvwxyz'.?" # P: Padding E: End of Sentence
+    '''map:
+    ç-> 'c
+    ã -> 'a
+    á -> 'b
+    â -> 'c
+    ê -> 'e
+    é -> 'd
+    í -> 'i
+    ó-> 'o
+    ô -> 'f
+    õ -> 'g
+    ú -> 'u
+    û -> 'h
+    ''''
     #vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
-    vocab =  "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"
+    #vocab =  "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"
     # data
     data = "../TTS-Portuguese-Corpus/"
     language = "pt" # if use English change for 'en'
