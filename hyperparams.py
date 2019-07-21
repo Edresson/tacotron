@@ -20,7 +20,7 @@ class Hyperparams:
     õ -> 'g
     ú -> 'u
     û -> 'h
-    ''''
+    '''
     #vocab =  "PE abcdefghijklmnopqrstuvwxyzçãé" # Portuguese vocab
     #vocab =  "PE abcdefghijklmnopqrstuvwxyzçãàáâêéíóôõúû"
     # data
